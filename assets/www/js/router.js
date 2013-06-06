@@ -5,8 +5,9 @@ define([
 		'underscore',
 		'backbone',
 		'vm',
+		'events'
 	],
-	function($, _, Backbone, Vm) {
+	function($, _, Backbone, Vm, Events) {
 		
 		var AppRouter = Backbone.Router.extend({
 			routes: {
@@ -25,12 +26,18 @@ define([
 					chatroomsView.render();
 				});
 			});
-			router.on('route:chatroom', function(room_id) {
+			router.on('route:chatroom', function(id) {
 				require(['views/chatroom'], function(ChatroomView) {
-					var chatroomView = Vm.create(appView, 'ChatroomView', ChatroomView);
+					var chatroomView = Vm.create(appView, 'ChatroomView', ChatroomView, { id: id });
 					chatroomView.render();
 				});
 			});
+
+			Events.on('navigate', function(path){
+					console.log("Navigating to: " + path);
+					router.navigate(path, { trigger: true });
+			});
+
 			Backbone.history.start();
 		};
 

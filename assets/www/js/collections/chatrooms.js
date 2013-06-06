@@ -8,11 +8,11 @@ define([
 	function($, Backbone, MetaroomModel) {
 			var ChatroomsCollection = Backbone.Collection.extend({
 					model: MetaroomModel,
-					url: 'BASEURL/api/chatrooms', // TODO
-			initialize: function () {
-					console.log("Fetching");
-					this.fetch();
-			});
+					url: 'http://home.axelcdv.com:3000/api/chatrooms', // TODO
+					initialize: function () {
+						console.log("Fetching");
+						this.fetch({ reset: true });
+					}
 			});
 
 			return ChatroomsCollection;

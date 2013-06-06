@@ -4,15 +4,17 @@ define([
 		'jquery',
 		'underscore',
 		'backbone',
-		'models/chatroom'
+		'collections/chatroom'
 	],
-	function($, _, Backbone, Chatroom) {
+	function($, _, Backbone, ChatroomCollection) {
 		var ChatroomView = Backbone.View.extend({
 			el: '.curView',
-			model: Chatroom,
-			template: _.template('<p>This is the chatroom view for chatroom: <%= room_id %></p>'),
+			template: _.template('<p>This is the chatroom view for chatroom: <%= id %></p>'),
+			initialize: function(options) {
+					this.collection = new ChatroomCollection({ id: options.id });
+			},
 			render: function() {
-				this.$el.html( this.template(this.model.attributes) );
+					this.$el.html( this.template( { id: this.collection.id } ) );
 			}
 		});
 
